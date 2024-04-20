@@ -160,19 +160,22 @@ final class Parser
     private function coerceArgumentValue(mixed $argument) : mixed
     {
         $coercedArgument = $argument;
+
         if (\is_string($argument)) {
             $lowercaseArgument = \strtolower($argument);
+
             if ($lowercaseArgument === self::NULL_VALUE) {
                 $coercedArgument = null;
-            } else if ($lowercaseArgument === 'true') {
+            } elseif ($lowercaseArgument === 'true') {
                 $coercedArgument = true;
-            } else if ($lowercaseArgument === 'false') {
+            } elseif ($lowercaseArgument === 'false') {
                 $coercedArgument = false;
-            } else if (\is_numeric($argument)) {
+            } elseif (\is_numeric($argument)) {
                 $coercedArgument = (\strpos($argument, '.') === false) ? (int) $argument : (float) $argument;
             }
         } elseif (\is_array($argument)) {
             $coercedArgument = [];
+
             foreach ($argument as $key => $arg) {
                 $coercedArgument[$key] = $this->coerceArgumentValue($arg);
             }
